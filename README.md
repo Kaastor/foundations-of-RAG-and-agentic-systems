@@ -1,8 +1,8 @@
-# rag-systems-lab
+# Foundations of RAG and Agentic Systems
 
 A complete, runnable, standard-library-only teaching repository that maps the attached *Agentic RAG* textbook into code. It implements a miniature but realistic system with offline ingestion, sparse/dense/hybrid retrieval, ANN search, reranking, context packing, grounded answer synthesis, an agentic controller, tool schemas, session memory, evaluation, tracing, publishing, and governance hooks.
 
-The attached textbook moves from foundational RAG ideas through advanced retrieval, agentic control, reliability, safety, and production operations. This repository mirrors that arc with a small codebase you can actually read end to end. fileciteturn0file0
+The attached textbook moves from foundational RAG ideas through advanced retrieval, agentic control, reliability, safety, and production operations. This repository mirrors that arc with a small codebase you can actually read end to end. 
 
 ## What this repository is
 
@@ -25,7 +25,7 @@ The textbook covers:
 - advanced retrieval design
 - agentic RAG control loops
 - reliability, safety, observability, and operations
-- enterprise deployment patterns and future directions fileciteturn0file0
+- enterprise deployment patterns and future directions
 
 This repository maps those chapters into four code strata:
 
@@ -55,7 +55,7 @@ Then run the CLI with either form:
 
 ```bash
 poetry run raglab --help
-python -m raglab --help
+poetry run python -m raglab --help
 ```
 
 ## Quick start
@@ -96,10 +96,17 @@ Run the benchmark:
 poetry run raglab evaluate --workspace .workspace/demo --mode answer
 ```
 
-Inspect a trace:
+Inspect the most recent trace:
 
 ```bash
-poetry run raglab trace <TRACE_ID> --workspace .workspace/demo
+TRACE_ID=$(poetry run python - <<'PY'
+from pathlib import Path
+
+trace = max(Path(".workspace/demo/traces").glob("*.json"), key=lambda path: path.stat().st_mtime)
+print(trace.stem)
+PY
+)
+poetry run raglab trace "$TRACE_ID" --workspace .workspace/demo
 ```
 
 ## How to rebuild the sample knowledge base from source
@@ -116,7 +123,7 @@ poetry run raglab publish --workspace .workspace/demo --note "initial demo publi
 ## How to run tests
 
 ```bash
-python -m unittest -v
+poetry run python -m unittest -v
 ```
 
 ## Where to start reading the code
