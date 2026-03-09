@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "rag-systems-lab"
+version = "0.1.0"
+description = "A pedagogical, runnable reference implementation for the Agentic RAG systems textbook."
+authors = ["OpenAI"]
+readme = "README.md"
+packages = [{ include = "raglab" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.scripts]
+raglab = "raglab.cli:main"
+
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"

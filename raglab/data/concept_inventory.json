@@ -1,0 +1,1247 @@
+[
+  {
+    "chapter": 1,
+    "title": "What large language models know and forget",
+    "concept": "Parametric vs explicit evidence",
+    "status": "documented only",
+    "files": [
+      "docs/chapters/ch01.md",
+      "raglab/generation/closed_book.py"
+    ],
+    "notes": "Explained and contrasted via the closed-book baseline; there is no real LLM parameter store."
+  },
+  {
+    "chapter": 1,
+    "title": "What large language models know and forget",
+    "concept": "Prompt-sensitive recall and staleness risk",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/generation/closed_book.py",
+      "docs/chapters/ch01.md"
+    ],
+    "notes": "Demonstrated by the inability of closed-book mode to answer source-sensitive corpus questions."
+  },
+  {
+    "chapter": 1,
+    "title": "What large language models know and forget",
+    "concept": "Need for provenance on local facts",
+    "status": "implemented in code",
+    "files": [
+      "raglab/generation/verify.py",
+      "raglab/generation/synthesizer.py"
+    ],
+    "notes": "Grounded answers always attach evidence-backed citations."
+  },
+  {
+    "chapter": 2,
+    "title": "Why retrieval is needed",
+    "concept": "Retrieval as an explicit evidence path",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py",
+      "raglab/cli.py"
+    ],
+    "notes": "Retrieval is the default path for grounded answers."
+  },
+  {
+    "chapter": 2,
+    "title": "Why retrieval is needed",
+    "concept": "Freshness, private knowledge, provenance",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/ops/publish.py",
+      "raglab/ops/governance.py"
+    ],
+    "notes": "Freshness and role-aware disclosure are present; no external private DB."
+  },
+  {
+    "chapter": 2,
+    "title": "Why retrieval is needed",
+    "concept": "Abstention when evidence is missing",
+    "status": "implemented in code",
+    "files": [
+      "raglab/generation/synthesizer.py",
+      "raglab/agent/controller.py"
+    ],
+    "notes": "The system abstains or asks for clarification instead of inventing support."
+  },
+  {
+    "chapter": 3,
+    "title": "Foundations of information retrieval",
+    "concept": "Corpus, query, relevance, ranking vocabulary",
+    "status": "implemented in code",
+    "files": [
+      "raglab/domain/models.py",
+      "raglab/retrieval/indexes.py"
+    ],
+    "notes": "The code uses explicit document, chunk, query, hit, and score objects."
+  },
+  {
+    "chapter": 3,
+    "title": "Foundations of information retrieval",
+    "concept": "Inverted-index style lexical retrieval",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/indexes.py"
+    ],
+    "notes": "A small BM25 index is built from chunk tokens."
+  },
+  {
+    "chapter": 3,
+    "title": "Foundations of information retrieval",
+    "concept": "Classical IR metrics",
+    "status": "implemented in code",
+    "files": [
+      "raglab/evaluation/metrics.py"
+    ],
+    "notes": "Recall@k, Precision@k, MRR, and nDCG are included."
+  },
+  {
+    "chapter": 4,
+    "title": "The core architecture of basic RAG",
+    "concept": "Retriever, reranker, generator, knowledge base boundaries",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py",
+      "raglab/generation/synthesizer.py",
+      "raglab/agent/controller.py"
+    ],
+    "notes": "Modules are intentionally separated along the book's architectural boundaries."
+  },
+  {
+    "chapter": 4,
+    "title": "The core architecture of basic RAG",
+    "concept": "Non-agentic fixed workflow",
+    "status": "implemented in code",
+    "files": [
+      "raglab/cli.py",
+      "raglab/generation/synthesizer.py"
+    ],
+    "notes": "The `answer` command is the fixed retrieve->rerank->pack->synthesize path."
+  },
+  {
+    "chapter": 4,
+    "title": "The core architecture of basic RAG",
+    "concept": "Offline vs online path distinction",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ingest/pipeline.py",
+      "raglab/build.py",
+      "raglab/ops/publish.py"
+    ],
+    "notes": "Offline staging and online live snapshots are separate."
+  },
+  {
+    "chapter": 5,
+    "title": "A minimal end-to-end RAG pipeline",
+    "concept": "Offline ingestion and online serving",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ingest/pipeline.py",
+      "raglab/cli.py"
+    ],
+    "notes": "Ingest/index/publish are separate from retrieve/answer/agent."
+  },
+  {
+    "chapter": 5,
+    "title": "A minimal end-to-end RAG pipeline",
+    "concept": "Chunk store separated from indexes",
+    "status": "implemented in code",
+    "files": [
+      "workspace/staged/chunks.jsonl (runtime artifact)",
+      "raglab/retrieval/indexes.py"
+    ],
+    "notes": "Chunks are stored as JSONL and indexed separately."
+  },
+  {
+    "chapter": 5,
+    "title": "A minimal end-to-end RAG pipeline",
+    "concept": "Trace logging and fallback policy",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ops/tracing.py",
+      "raglab/generation/synthesizer.py"
+    ],
+    "notes": "The system records traces and abstains when support is weak."
+  },
+  {
+    "chapter": 6,
+    "title": "Documents, corpora, and chunking",
+    "concept": "Front matter parsing and normalization",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ingest/pipeline.py"
+    ],
+    "notes": "Markdown front matter becomes document metadata."
+  },
+  {
+    "chapter": 6,
+    "title": "Documents, corpora, and chunking",
+    "concept": "Layout-aware and table-aware chunking",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ingest/pipeline.py"
+    ],
+    "notes": "Headings and markdown tables become chunk boundaries and row chunks."
+  },
+  {
+    "chapter": 6,
+    "title": "Documents, corpora, and chunking",
+    "concept": "OCR noise, duplicates, quarantine workflow",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/ops/security.py",
+      "raglab/ingest/pipeline.py"
+    ],
+    "notes": "Low-OCR and malicious documents are quarantined; PDF OCR is simulated."
+  },
+  {
+    "chapter": 7,
+    "title": "Embeddings and vector representations",
+    "concept": "Vector representations and cosine similarity",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/indexes.py",
+      "raglab/text.py"
+    ],
+    "notes": "Hashed vectors and cosine similarity drive dense retrieval."
+  },
+  {
+    "chapter": 7,
+    "title": "Embeddings and vector representations",
+    "concept": "Dual-encoder style offline chunk vectors / online query vectors",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/retrieval/indexes.py"
+    ],
+    "notes": "The hash vectorizer plays the role of a stand-in encoder."
+  },
+  {
+    "chapter": 7,
+    "title": "Embeddings and vector representations",
+    "concept": "Representation drift and domain mismatch",
+    "status": "documented only",
+    "files": [
+      "docs/chapters/ch07.md",
+      "docs/concept_coverage.md"
+    ],
+    "notes": "Discussed honestly; not benchmarked against alternate embedding models."
+  },
+  {
+    "chapter": 8,
+    "title": "Indexing and approximate nearest neighbor search",
+    "concept": "Approximate nearest neighbor search",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/indexes.py"
+    ],
+    "notes": "Random-hyperplane LSH provides an approximate dense candidate set."
+  },
+  {
+    "chapter": 8,
+    "title": "Indexing and approximate nearest neighbor search",
+    "concept": "Probe budget vs recall trade-off",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/retrieval/indexes.py",
+      "raglab/cli.py"
+    ],
+    "notes": "ANN can be toggled with `--no-ann`; tables and budgets are documented rather than learned."
+  },
+  {
+    "chapter": 8,
+    "title": "Indexing and approximate nearest neighbor search",
+    "concept": "HNSW, IVF, PQ families",
+    "status": "documented only",
+    "files": [
+      "docs/chapters/ch08.md",
+      "docs/concept_coverage.md"
+    ],
+    "notes": "The repository explains them but implements a simpler LSH alternative."
+  },
+  {
+    "chapter": 9,
+    "title": "Query understanding and first-pass retrieval",
+    "concept": "Query normalization and identifier preservation",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py",
+      "raglab/text.py"
+    ],
+    "notes": "Identifiers such as SB-118 and V14 are preserved and boosted."
+  },
+  {
+    "chapter": 9,
+    "title": "Query understanding and first-pass retrieval",
+    "concept": "Ambiguity detection and clarification before blind retrieval",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py",
+      "raglab/agent/controller.py"
+    ],
+    "notes": "Ambiguous Phoenix and under-scoped policy queries ask for clarification."
+  },
+  {
+    "chapter": 9,
+    "title": "Query understanding and first-pass retrieval",
+    "concept": "Metadata mismatch and freshness-sensitive phrasing",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/retrieval/engine.py",
+      "raglab/ops/publish.py"
+    ],
+    "notes": "Region and date filters exist; full source-system mismatch simulation is limited."
+  },
+  {
+    "chapter": 10,
+    "title": "Reranking and relevance refinement",
+    "concept": "Second-stage reranking",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Heuristic reranking refines the first-pass candidate set."
+  },
+  {
+    "chapter": 10,
+    "title": "Reranking and relevance refinement",
+    "concept": "Metadata-aware relevance refinement",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Authority, product, region, quality, trust, and superseded status influence ranking."
+  },
+  {
+    "chapter": 10,
+    "title": "Reranking and relevance refinement",
+    "concept": "Diversity control / deduplication",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/retrieval/engine.py",
+      "raglab/ingest/pipeline.py"
+    ],
+    "notes": "Duplicate docs and same-document redundancy are downweighted heuristically."
+  },
+  {
+    "chapter": 11,
+    "title": "Prompt assembly and context packing",
+    "concept": "Budget-aware context packing",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "PackedContext respects a token budget and keeps the highest-value spans."
+  },
+  {
+    "chapter": 11,
+    "title": "Prompt assembly and context packing",
+    "concept": "Boilerplate trimming and answer-bearing selection",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Sentence scoring chooses the most query-relevant evidence spans."
+  },
+  {
+    "chapter": 11,
+    "title": "Prompt assembly and context packing",
+    "concept": "Contradiction retention",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/retrieval/engine.py",
+      "raglab/generation/synthesizer.py"
+    ],
+    "notes": "Conflicts are surfaced as notes rather than silently erased."
+  },
+  {
+    "chapter": 12,
+    "title": "Grounded generation and answer synthesis",
+    "concept": "Grounded generation from retrieved context",
+    "status": "implemented in code",
+    "files": [
+      "raglab/generation/synthesizer.py"
+    ],
+    "notes": "The generator is explicitly evidence-first and extractive."
+  },
+  {
+    "chapter": 12,
+    "title": "Grounded generation and answer synthesis",
+    "concept": "Partial answers and abstention",
+    "status": "implemented in code",
+    "files": [
+      "raglab/generation/synthesizer.py",
+      "raglab/agent/controller.py"
+    ],
+    "notes": "Unsupported or under-scoped questions produce abstention or clarification."
+  },
+  {
+    "chapter": 12,
+    "title": "Grounded generation and answer synthesis",
+    "concept": "Claim-level support checking",
+    "status": "implemented in code",
+    "files": [
+      "raglab/generation/verify.py"
+    ],
+    "notes": "Claims are checked against cited evidence spans."
+  },
+  {
+    "chapter": 13,
+    "title": "Evaluating basic RAG systems",
+    "concept": "Retrieval metrics",
+    "status": "implemented in code",
+    "files": [
+      "raglab/evaluation/metrics.py"
+    ],
+    "notes": "Recall@k, Precision@k, MRR, and nDCG are computed."
+  },
+  {
+    "chapter": 13,
+    "title": "Evaluating basic RAG systems",
+    "concept": "Groundedness and task-level answer metrics",
+    "status": "implemented in code",
+    "files": [
+      "raglab/evaluation/runner.py",
+      "raglab/generation/verify.py"
+    ],
+    "notes": "Groundedness and expected-fragment hit rate are reported."
+  },
+  {
+    "chapter": 13,
+    "title": "Evaluating basic RAG systems",
+    "concept": "Dirty corpora and false negatives in evaluation",
+    "status": "partially demonstrated",
+    "files": [
+      "docs/chapters/ch13.md",
+      "examples/corpus/base/docs/ocr_torque_scan.txt"
+    ],
+    "notes": "The benchmark corpus includes noisy and quarantined inputs, but label incompleteness is only lightly simulated."
+  },
+  {
+    "chapter": 14,
+    "title": "Sparse, dense, and hybrid retrieval",
+    "concept": "Sparse retrieval",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/indexes.py"
+    ],
+    "notes": "BM25-style lexical ranking is available."
+  },
+  {
+    "chapter": 14,
+    "title": "Sparse, dense, and hybrid retrieval",
+    "concept": "Dense retrieval",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/indexes.py"
+    ],
+    "notes": "Hashed vector search with cosine similarity is available."
+  },
+  {
+    "chapter": 14,
+    "title": "Sparse, dense, and hybrid retrieval",
+    "concept": "Hybrid retrieval and score fusion",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Hybrid retrieval uses reciprocal rank fusion."
+  },
+  {
+    "chapter": 15,
+    "title": "Metadata filtering and structured retrieval",
+    "concept": "Hard metadata filters",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Region, product, disclosure, and date filters constrain eligibility."
+  },
+  {
+    "chapter": 15,
+    "title": "Metadata filtering and structured retrieval",
+    "concept": "Permission-aware retrieval",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ops/governance.py",
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Retrieval happens only over chunks the user may see."
+  },
+  {
+    "chapter": 15,
+    "title": "Metadata filtering and structured retrieval",
+    "concept": "Structured retrieval over records",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/tools.py"
+    ],
+    "notes": "Service-center lookup is done through a structured JSON-backed tool."
+  },
+  {
+    "chapter": 16,
+    "title": "Query rewriting, expansion, and decomposition",
+    "concept": "Query rewriting and expansion",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Alias rules such as rollback -> credential recovery are applied."
+  },
+  {
+    "chapter": 16,
+    "title": "Query rewriting, expansion, and decomposition",
+    "concept": "Decomposition into subqueries",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/retrieval/engine.py",
+      "raglab/agent/planner.py"
+    ],
+    "notes": "Subqueries are extracted heuristically; full aggregation logic is modest."
+  },
+  {
+    "chapter": 16,
+    "title": "Query rewriting, expansion, and decomposition",
+    "concept": "Ask the user instead of guessing missing scope",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py"
+    ],
+    "notes": "Ambiguous policy and Phoenix queries ask rather than hallucinating scope."
+  },
+  {
+    "chapter": 17,
+    "title": "Multi-hop retrieval and iterative search",
+    "concept": "Iterative retrieval with state",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py",
+      "raglab/domain/models.py"
+    ],
+    "notes": "AgentState tracks evidence, blockers, and action history across steps."
+  },
+  {
+    "chapter": 17,
+    "title": "Multi-hop retrieval and iterative search",
+    "concept": "Citation / entity following",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Explicit references like HMX-44 and RB-X12-STAGING-ROTATE trigger follow-up search."
+  },
+  {
+    "chapter": 17,
+    "title": "Multi-hop retrieval and iterative search",
+    "concept": "Stopping criteria and bounded search budgets",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py",
+      "raglab/config.py"
+    ],
+    "notes": "The controller stops after sufficiency or budget exhaustion."
+  },
+  {
+    "chapter": 18,
+    "title": "Long-context RAG and context compression",
+    "concept": "Long-context budgeting",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Context selection remains budgeted even though the demo corpus is small."
+  },
+  {
+    "chapter": 18,
+    "title": "Long-context RAG and context compression",
+    "concept": "Extractive compression",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Sentence selection compresses long chunks."
+  },
+  {
+    "chapter": 18,
+    "title": "Long-context RAG and context compression",
+    "concept": "Abstractive compression and lost-in-the-middle analysis",
+    "status": "documented only",
+    "files": [
+      "docs/chapters/ch18.md",
+      "docs/concept_coverage.md"
+    ],
+    "notes": "The repository avoids abstractive compression because it would require a more capable model."
+  },
+  {
+    "chapter": 19,
+    "title": "Knowledge base freshness and incremental updates",
+    "concept": "Staged vs live knowledge snapshots",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ops/publish.py",
+      "raglab/build.py"
+    ],
+    "notes": "Snapshots are built, published, and listed explicitly."
+  },
+  {
+    "chapter": 19,
+    "title": "Knowledge base freshness and incremental updates",
+    "concept": "Replayable ingestion from source roots",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/ingest/pipeline.py",
+      "raglab/demos.py"
+    ],
+    "notes": "The system rebuilds from source roots; it does not stream source events."
+  },
+  {
+    "chapter": 19,
+    "title": "Knowledge base freshness and incremental updates",
+    "concept": "Version-aware ranking / stale evidence handling",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Superseded documents are penalized and active+superseded conflicts are surfaced."
+  },
+  {
+    "chapter": 20,
+    "title": "Personalization, session memory, and adaptive context",
+    "concept": "Session memory and scoped memory writes",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/memory.py",
+      "raglab/agent/controller.py"
+    ],
+    "notes": "The controller can persist task-scoped memory entries in session files."
+  },
+  {
+    "chapter": 20,
+    "title": "Personalization, session memory, and adaptive context",
+    "concept": "Adaptive retrieval from user profile and session state",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py",
+      "examples/users.json"
+    ],
+    "notes": "User region and remembered product/region can bias retrieval."
+  },
+  {
+    "chapter": 20,
+    "title": "Personalization, session memory, and adaptive context",
+    "concept": "Memory contamination guardrails",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/agent/controller.py"
+    ],
+    "notes": "Conflicting product memory is pruned; more advanced contamination control is documented only."
+  },
+  {
+    "chapter": 21,
+    "title": "What makes a RAG system agentic",
+    "concept": "Controller, state, actions, policy",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py",
+      "raglab/domain/models.py"
+    ],
+    "notes": "AgentState plus a bounded action loop make the system genuinely stateful."
+  },
+  {
+    "chapter": 21,
+    "title": "What makes a RAG system agentic",
+    "concept": "Workflow vs agentic behavior",
+    "status": "implemented in code",
+    "files": [
+      "raglab/cli.py",
+      "raglab/agent/controller.py"
+    ],
+    "notes": "The `answer` and `agent` commands intentionally separate fixed workflow from adaptive control."
+  },
+  {
+    "chapter": 21,
+    "title": "What makes a RAG system agentic",
+    "concept": "Observable action semantics",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ops/tracing.py",
+      "raglab/agent/controller.py"
+    ],
+    "notes": "Traces record retrieval, tool calls, clarification, and stop decisions."
+  },
+  {
+    "chapter": 22,
+    "title": "Tools, APIs, and function calling",
+    "concept": "Tool schemas and validation",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/tools.py"
+    ],
+    "notes": "Each tool declares required fields, enums, and read-only vs side-effecting status."
+  },
+  {
+    "chapter": 22,
+    "title": "Tools, APIs, and function calling",
+    "concept": "Function-calling style structured outputs",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/tools.py"
+    ],
+    "notes": "Tool calls return normalized payloads instead of raw text."
+  },
+  {
+    "chapter": 22,
+    "title": "Tools, APIs, and function calling",
+    "concept": "Side-effect safety boundary",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/tools.py",
+      "raglab/ops/governance.py"
+    ],
+    "notes": "A side-effecting tool schema exists but is blocked unless governance approves it."
+  },
+  {
+    "chapter": 23,
+    "title": "Planning and task decomposition",
+    "concept": "Task classification and coarse planning",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/planner.py"
+    ],
+    "notes": "The planner chooses retrieval, tool, clarification, or follow-up patterns from task type."
+  },
+  {
+    "chapter": 23,
+    "title": "Planning and task decomposition",
+    "concept": "Constraint acquisition before execution",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py"
+    ],
+    "notes": "Under-scoped tasks clarify before retrieval continues."
+  },
+  {
+    "chapter": 23,
+    "title": "Planning and task decomposition",
+    "concept": "Replanning after observations",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/agent/controller.py"
+    ],
+    "notes": "The controller changes route or follows references after observing retrieved evidence."
+  },
+  {
+    "chapter": 24,
+    "title": "Retrieval as an action inside agent loops",
+    "concept": "Retrieval as a chosen action",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py"
+    ],
+    "notes": "Retrieval is one controller action among tool use, clarification, and synthesis."
+  },
+  {
+    "chapter": 24,
+    "title": "Retrieval as an action inside agent loops",
+    "concept": "Retry / reformulation / route switch",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py",
+      "raglab/agent/router.py"
+    ],
+    "notes": "Low-support cases escalate from cheap or sparse routes to hybrid ones."
+  },
+  {
+    "chapter": 24,
+    "title": "Retrieval as an action inside agent loops",
+    "concept": "Ask the user when scope is missing",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py"
+    ],
+    "notes": "The controller distinguishes missing user intent from corpus-discoverable follow-ups."
+  },
+  {
+    "chapter": 25,
+    "title": "Working memory, state, and control flow",
+    "concept": "Explicit working memory",
+    "status": "implemented in code",
+    "files": [
+      "raglab/domain/models.py",
+      "raglab/agent/memory.py"
+    ],
+    "notes": "AgentState stores evidence, blockers, open questions, and scoped memory entries."
+  },
+  {
+    "chapter": 25,
+    "title": "Working memory, state, and control flow",
+    "concept": "Control-flow states and legal transitions",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py"
+    ],
+    "notes": "The controller changes behavior when waiting for the user, following references, or synthesizing."
+  },
+  {
+    "chapter": 25,
+    "title": "Working memory, state, and control flow",
+    "concept": "Prompt is not the authoritative state",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py",
+      "raglab/agent/memory.py"
+    ],
+    "notes": "State lives outside model prompts in JSON-serializable objects."
+  },
+  {
+    "chapter": 26,
+    "title": "Routing across retrievers, tools, and models",
+    "concept": "Routing across retrievers",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/router.py",
+      "raglab/agent/controller.py"
+    ],
+    "notes": "Exact identifiers favor sparse routes; harder tasks use hybrid routes."
+  },
+  {
+    "chapter": 26,
+    "title": "Routing across retrievers, tools, and models",
+    "concept": "Routing across structured tools vs text retrieval",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/router.py",
+      "raglab/agent/tools.py"
+    ],
+    "notes": "Structured requests route to record lookups first."
+  },
+  {
+    "chapter": 26,
+    "title": "Routing across retrievers, tools, and models",
+    "concept": "Routing across model families",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/agent/router.py",
+      "raglab/generation/synthesizer.py"
+    ],
+    "notes": "Fast vs careful synthesis profiles simulate model-family routing without external models."
+  },
+  {
+    "chapter": 27,
+    "title": "Reflection, critique, and self-correction",
+    "concept": "Correction triggers",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py"
+    ],
+    "notes": "Weak evidence, missing scope, and conflicts trigger retries, clarification, or escalation."
+  },
+  {
+    "chapter": 27,
+    "title": "Reflection, critique, and self-correction",
+    "concept": "Automatic vs user-mediated correction",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py"
+    ],
+    "notes": "The controller distinguishes route changes from explicit user clarification."
+  },
+  {
+    "chapter": 27,
+    "title": "Reflection, critique, and self-correction",
+    "concept": "Escalation and bounded correction loops",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py",
+      "raglab/config.py"
+    ],
+    "notes": "Search budgets and high-stakes escalation prevent endless retries."
+  },
+  {
+    "chapter": 28,
+    "title": "Multi-agent RAG architectures",
+    "concept": "Planner / retriever / writer / verifier roles",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/agent/multi_agent.py"
+    ],
+    "notes": "A small specialized multi-agent path is included."
+  },
+  {
+    "chapter": 28,
+    "title": "Multi-agent RAG architectures",
+    "concept": "Shared artifacts and arbitration",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/agent/multi_agent.py"
+    ],
+    "notes": "The verifier can mark claims unsupported or recommend escalation."
+  },
+  {
+    "chapter": 28,
+    "title": "Multi-agent RAG architectures",
+    "concept": "Coordination cost vs benefit",
+    "status": "documented only",
+    "files": [
+      "docs/chapters/ch28.md",
+      "docs/concept_coverage.md"
+    ],
+    "notes": "The repo includes one coordination pattern, but broader coordination trade-offs remain in docs."
+  },
+  {
+    "chapter": 29,
+    "title": "Human-in-the-loop agent workflows",
+    "concept": "Clarification requests to end users",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/controller.py"
+    ],
+    "notes": "The controller can stop and ask for missing region or policy family."
+  },
+  {
+    "chapter": 29,
+    "title": "Human-in-the-loop agent workflows",
+    "concept": "Permission and source-preference confirmation",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/ops/governance.py",
+      "raglab/agent/tools.py"
+    ],
+    "notes": "Role-based disclosure is enforced; richer approval workflows are documented."
+  },
+  {
+    "chapter": 29,
+    "title": "Human-in-the-loop agent workflows",
+    "concept": "Reviewer escalation packets",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/agent/controller.py"
+    ],
+    "notes": "Escalation text exists, but reviewer ticketing is simulated rather than integrated."
+  },
+  {
+    "chapter": 30,
+    "title": "Groundedness, attribution, and citation",
+    "concept": "Groundedness as claim support",
+    "status": "implemented in code",
+    "files": [
+      "raglab/generation/verify.py"
+    ],
+    "notes": "Claims are checked against supporting evidence spans."
+  },
+  {
+    "chapter": 30,
+    "title": "Groundedness, attribution, and citation",
+    "concept": "Attribution with citations",
+    "status": "implemented in code",
+    "files": [
+      "raglab/domain/models.py",
+      "raglab/generation/verify.py"
+    ],
+    "notes": "Citation objects point back to chunk, doc, and section."
+  },
+  {
+    "chapter": 30,
+    "title": "Groundedness, attribution, and citation",
+    "concept": "Post-generation citation verification",
+    "status": "implemented in code",
+    "files": [
+      "raglab/generation/verify.py"
+    ],
+    "notes": "Verification runs after the answer draft is formed."
+  },
+  {
+    "chapter": 31,
+    "title": "Failure modes and hallucination in RAG",
+    "concept": "Retrieval-induced vs generation-induced failure taxonomy",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/generation/verify.py",
+      "raglab/retrieval/engine.py",
+      "docs/chapters/ch31.md"
+    ],
+    "notes": "The code surfaces stale, conflicting, and unsupported-evidence cases; a real generative hallucination model is out of scope."
+  },
+  {
+    "chapter": 31,
+    "title": "Failure modes and hallucination in RAG",
+    "concept": "Context contamination",
+    "status": "implemented in code",
+    "files": [
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Conflicting or superseded evidence is retained and annotated rather than silently blended."
+  },
+  {
+    "chapter": 31,
+    "title": "Failure modes and hallucination in RAG",
+    "concept": "Messy-data failures",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ingest/pipeline.py",
+      "raglab/ops/security.py"
+    ],
+    "notes": "Low-OCR and malicious documents are quarantined."
+  },
+  {
+    "chapter": 32,
+    "title": "Security threats: prompt injection, retrieval poisoning, and data leakage",
+    "concept": "Indirect prompt injection detection",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/ops/security.py",
+      "raglab/ingest/pipeline.py"
+    ],
+    "notes": "Heuristics flag instruction-like text in retrieved documents."
+  },
+  {
+    "chapter": 32,
+    "title": "Security threats: prompt injection, retrieval poisoning, and data leakage",
+    "concept": "Trust-aware ingestion and retrieval",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ops/security.py",
+      "raglab/retrieval/engine.py"
+    ],
+    "notes": "Low-trust content is quarantined or excluded from eligible chunks."
+  },
+  {
+    "chapter": 32,
+    "title": "Security threats: prompt injection, retrieval poisoning, and data leakage",
+    "concept": "Permission-aware least-privilege tool use",
+    "status": "implemented in code",
+    "files": [
+      "raglab/agent/tools.py",
+      "raglab/ops/governance.py"
+    ],
+    "notes": "Tool runtime validation plus role-based policy gates are present."
+  },
+  {
+    "chapter": 33,
+    "title": "Evaluation of agentic RAG systems",
+    "concept": "Outcome metrics plus process metrics",
+    "status": "implemented in code",
+    "files": [
+      "raglab/evaluation/runner.py"
+    ],
+    "notes": "The benchmark reports retrieval, answer, clarification, and escalation-related metrics."
+  },
+  {
+    "chapter": 33,
+    "title": "Evaluation of agentic RAG systems",
+    "concept": "Clarification quality",
+    "status": "implemented in code",
+    "files": [
+      "raglab/evaluation/metrics.py"
+    ],
+    "notes": "Clarification precision and recall are computed."
+  },
+  {
+    "chapter": 33,
+    "title": "Evaluation of agentic RAG systems",
+    "concept": "Escalation and retry quality",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/evaluation/runner.py",
+      "docs/chapters/ch33.md"
+    ],
+    "notes": "Escalation rate is measured; richer retry-gain analysis is documented."
+  },
+  {
+    "chapter": 34,
+    "title": "Latency, caching, and cost optimization",
+    "concept": "Latency decomposition",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ops/tracing.py",
+      "docs/chapters/ch34.md"
+    ],
+    "notes": "Trace spans make route, retrieval, and tool latency visible."
+  },
+  {
+    "chapter": 34,
+    "title": "Latency, caching, and cost optimization",
+    "concept": "Caching and cascades",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/ops/cache.py",
+      "raglab/agent/router.py"
+    ],
+    "notes": "A file cache exists and routing models cheap vs careful paths; integrated cache use is intentionally lightweight."
+  },
+  {
+    "chapter": 34,
+    "title": "Latency, caching, and cost optimization",
+    "concept": "Dynamic budgets",
+    "status": "implemented in code",
+    "files": [
+      "raglab/config.py",
+      "raglab/agent/controller.py"
+    ],
+    "notes": "The controller has bounded steps and route escalation thresholds."
+  },
+  {
+    "chapter": 35,
+    "title": "Observability, tracing, and debugging",
+    "concept": "Structured traces and spans",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ops/tracing.py"
+    ],
+    "notes": "Every agent run and many answer flows emit structured JSON traces."
+  },
+  {
+    "chapter": 35,
+    "title": "Observability, tracing, and debugging",
+    "concept": "Debugging workflows from symptom to root cause",
+    "status": "implemented in code",
+    "files": [
+      "docs/chapters/ch35.md",
+      "docs/architecture.md"
+    ],
+    "notes": "The docs show how to inspect ingest, retrieval, routing, and generation artifacts."
+  },
+  {
+    "chapter": 35,
+    "title": "Observability, tracing, and debugging",
+    "concept": "Lineage from serving back to snapshot artifacts",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ops/publish.py",
+      "raglab/ops/tracing.py"
+    ],
+    "notes": "Traces and live pointers connect requests to snapshot versions."
+  },
+  {
+    "chapter": 36,
+    "title": "Governance, privacy, and compliance",
+    "concept": "Role-based access and disclosure classes",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ops/governance.py",
+      "examples/users.json"
+    ],
+    "notes": "Roles determine allowed disclosures before retrieval."
+  },
+  {
+    "chapter": 36,
+    "title": "Governance, privacy, and compliance",
+    "concept": "Retention and auditability hooks",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/ops/governance.py",
+      "raglab/ops/tracing.py"
+    ],
+    "notes": "Retention tags and auditable traces exist, but no external deletion workflow is integrated."
+  },
+  {
+    "chapter": 36,
+    "title": "Governance, privacy, and compliance",
+    "concept": "Purpose limitation and human approval gates",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/ops/governance.py",
+      "raglab/agent/tools.py"
+    ],
+    "notes": "Action approval is a toy predicate rather than a full enterprise policy engine."
+  },
+  {
+    "chapter": 37,
+    "title": "Enterprise knowledge assistants and domain agents",
+    "concept": "Domain grounding by role and workflow",
+    "status": "implemented in code",
+    "files": [
+      "examples/users.json",
+      "raglab/agent/router.py",
+      "raglab/agent/controller.py"
+    ],
+    "notes": "Support and distributor tasks use different routes, disclosures, and tools."
+  },
+  {
+    "chapter": 37,
+    "title": "Enterprise knowledge assistants and domain agents",
+    "concept": "Workflow integration",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/agent/tools.py"
+    ],
+    "notes": "Structured service-center and runbook tools simulate domain-specific integrations."
+  },
+  {
+    "chapter": 37,
+    "title": "Enterprise knowledge assistants and domain agents",
+    "concept": "Domain-specific evaluation and source preference",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/evaluation/runner.py",
+      "docs/chapters/ch37.md"
+    ],
+    "notes": "Domain demos and role-aware behavior exist; real business KPIs are documented only."
+  },
+  {
+    "chapter": 38,
+    "title": "Production architectures and deployment patterns",
+    "concept": "Offline vs online planes",
+    "status": "implemented in code",
+    "files": [
+      "raglab/ingest/pipeline.py",
+      "raglab/ops/publish.py",
+      "raglab/cli.py"
+    ],
+    "notes": "Ingest/index/publish happen offline; retrieve/answer/agent happen on live snapshots."
+  },
+  {
+    "chapter": 38,
+    "title": "Production architectures and deployment patterns",
+    "concept": "Quarantine, validation, publish, rollback handles",
+    "status": "partially demonstrated",
+    "files": [
+      "raglab/ingest/pipeline.py",
+      "raglab/ops/publish.py"
+    ],
+    "notes": "Quarantine and publish are implemented; rollback is manual by selecting a previous snapshot."
+  },
+  {
+    "chapter": 38,
+    "title": "Production architectures and deployment patterns",
+    "concept": "Versioned control policies",
+    "status": "partially demonstrated",
+    "files": [
+      "docs/chapters/ch38.md",
+      "raglab/config.py"
+    ],
+    "notes": "Config values are manifest-backed; there is no external control plane."
+  },
+  {
+    "chapter": 39,
+    "title": "Future directions in agentic knowledge systems",
+    "concept": "Documented vs inferred vs speculative futures",
+    "status": "documented only",
+    "files": [
+      "docs/chapters/ch39.md"
+    ],
+    "notes": "This chapter is intentionally narrative and not mapped to executable code."
+  },
+  {
+    "chapter": 39,
+    "title": "Future directions in agentic knowledge systems",
+    "concept": "Richer evidence structures and stronger controllers",
+    "status": "documented only",
+    "files": [
+      "docs/chapters/ch39.md",
+      "docs/architecture.md"
+    ],
+    "notes": "Discussed as future work, not implemented directly."
+  },
+  {
+    "chapter": 39,
+    "title": "Future directions in agentic knowledge systems",
+    "concept": "Stable principles that survive future model changes",
+    "status": "documented only",
+    "files": [
+      "docs/concept_coverage.md",
+      "README.md"
+    ],
+    "notes": "The repo closes by naming enduring design principles rather than adding more code."
+  }
+]

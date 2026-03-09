@@ -1,0 +1,32 @@
+[
+  {
+    "environment": "sandbox",
+    "procedure_name": "X12 key rotation rollback",
+    "steps": [
+      "Freeze new token issuance.",
+      "Re-enable the previous sandbox API key.",
+      "Re-run the health check job."
+    ],
+    "source_id": "RB-X12-STAGING-ROTATE"
+  },
+  {
+    "environment": "staging",
+    "procedure_name": "X12 key rotation rollback",
+    "steps": [
+      "Freeze new token issuance.",
+      "Re-enable the previous staging API key.",
+      "Re-run the health check job.",
+      "Record the rollback in release checklist RC-22."
+    ],
+    "source_id": "RB-X12-STAGING-ROTATE"
+  },
+  {
+    "environment": "production",
+    "procedure_name": "X12 key rotation rollback",
+    "steps": [
+      "Escalate to the production change manager before rollback.",
+      "Re-enable the previous production key under approval."
+    ],
+    "source_id": "RB-X12-STAGING-ROTATE"
+  }
+]

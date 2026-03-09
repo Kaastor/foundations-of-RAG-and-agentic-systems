@@ -1,0 +1,19 @@
+---
+doc_id: OCR-SCAN-TORQUE
+title: Scanned Torque Scan
+doc_type: scan
+product: V14
+region: global
+effective_date: 2025-03-01
+version: scan
+authority: reference
+status: active
+disclosure: internal
+allowed_roles: field_support,engineering,compliance
+tags: ocr,torque,v14
+references: 
+trust: trusted
+ocr_confidence: 0.41
+---
+The V14 torqve after f1rmware 3.2 is 0.43 N-m.
+The scan is incomplete and drops the supporting bulletin identifier.

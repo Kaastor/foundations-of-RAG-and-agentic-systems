@@ -1,0 +1,17 @@
+[
+  {
+    "model": "V14",
+    "region": "EU",
+    "warranty_program": "W-V14-EU-2025"
+  },
+  {
+    "model": "V14",
+    "region": "North America",
+    "warranty_program": "W-V14-NA-2025"
+  },
+  {
+    "model": "X12",
+    "region": "global",
+    "warranty_program": "W-X12-GLOBAL"
+  }
+]

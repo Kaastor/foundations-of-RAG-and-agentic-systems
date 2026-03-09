@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Warsaw Service Hub",
+    "region": "EU",
+    "models": [
+      "V14"
+    ],
+    "warranty_programs": [
+      "W-V14-EU-2025"
+    ],
+    "city": "Warsaw"
+  },
+  {
+    "name": "Gdansk Coastal Service Hub",
+    "region": "EU",
+    "models": [
+      "V14"
+    ],
+    "warranty_programs": [
+      "W-V14-EU-2025"
+    ],
+    "city": "Gdansk"
+  },
+  {
+    "name": "Austin Service Center",
+    "region": "North America",
+    "models": [
+      "V14",
+      "X12"
+    ],
+    "warranty_programs": [
+      "W-V14-NA-2025"
+    ],
+    "city": "Austin"
+  }
+]

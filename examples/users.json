@@ -1,0 +1,41 @@
+[
+  {
+    "user_id": "field-eu",
+    "role": "field_support",
+    "region": "EU",
+    "language": "en",
+    "allowed_disclosures": [
+      "public",
+      "partner_shareable",
+      "internal"
+    ],
+    "source_preference": "authority",
+    "high_stakes": false
+  },
+  {
+    "user_id": "distributor-eu",
+    "role": "distributor_support",
+    "region": "EU",
+    "language": "en",
+    "allowed_disclosures": [
+      "public",
+      "partner_shareable"
+    ],
+    "source_preference": "customer_safe",
+    "high_stakes": true
+  },
+  {
+    "user_id": "compliance-analyst",
+    "role": "compliance",
+    "region": "global",
+    "language": "en",
+    "allowed_disclosures": [
+      "public",
+      "partner_shareable",
+      "internal",
+      "restricted"
+    ],
+    "source_preference": "authority",
+    "high_stakes": true
+  }
+]
